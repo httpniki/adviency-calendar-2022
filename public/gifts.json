@@ -1,0 +1,37 @@
+[
+   {
+		"name": "Play 5",
+		"quantity": 0,
+		"recipient": "",
+		"image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTA0VKR0M6-jcjWewxw7U2anPcjwE_WGs-KWEYEOfM-6OWvuj_B81m3y8l6blxJ3dLSkRcThFsBAI7DTT31P8Ij8gJPoKT2-w",
+      "price": 0
+   },
+   {
+		"name": "PC Gamer",
+		"quantity": 0,
+		"recipient": "",
+		"image": "https://www.megatecnologia.com.ar/images/1669989635132.jpg",
+      "price": 0
+   },
+   {
+		"name": "Chocolate",
+		"quantity": 0,
+		"recipient": "",
+		"image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Dark_chocolate_bar.jpg/1200px-Dark_chocolate_bar.jpg",
+      "price": 0
+   },
+   {
+		"name": "Cigarrillos Pier",
+		"quantity": 0,
+		"recipient": "",
+		"image": "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/228/828/products/4815-c22fb36c3fa3fef6f816005457057758-1024-1024.jpeg",
+      "price": 0
+   },
+   {
+		"name": "Pala",
+		"quantity": 0,
+		"recipient": "",
+		"image": "https://arcencohogar.vtexassets.com/arquivos/ids/280802-800-800?v=637651624404030000&width=800&height=800&aspect=true",
+      "price": 0
+   }
+]
