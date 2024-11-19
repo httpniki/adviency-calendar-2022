@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Gift } from '~/types/gifts'
-import GiftPreviewModal from '../gift-preview/GiftPreviewModal'
+import GiftPreviewModal from '../GiftPreviewModal'
 import GiftImage from './GiftImage'
 import GiftPrice from './GiftPrice'
 

@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 
-import RenderGifts from '~/components/app/RenderGifts';
-import GiftsActions from '~/components/app/GiftsActions';
-import Button from '~/components/Button';
+import RenderGifts from '~/components/RenderGifts';
+import GiftsActions from '~/components/GiftsActions';
+import Button from '~/components/ui/Button';
 import RenderModal from '~/components/RenderModal';
 import AddGiftModal from '~/components/add-gift/AddGiftModal';
 import getRandomGifts from '~/utils/getRandomGifts';
 import type { Gift } from '~/types/gifts';
-import AppMusic from '~/components/app/AppMusic';
+import AppMusic from '~/components/AppMusic';
 
 export async function loader() {
    const randomGifts: Gift[] = await getRandomGifts()

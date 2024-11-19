@@ -1,9 +1,9 @@
 import type { Gift } from '~/types/gifts'
 
-export default function fetchGifts(): Gift[] | null {
+export default function fetchGifts(): Gift[] {
    const gifts = window.localStorage.getItem('gifts')
-   if(!gifts) return null
+
+   if(!gifts) return []
          
-   const parsedGifts = JSON.parse(gifts)
-   return parsedGifts
+   return JSON.parse(gifts) as Gift[]
 }

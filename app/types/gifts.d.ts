@@ -15,7 +15,7 @@ export interface GiftError {
 export interface GiftContextValue {
    gifts: Gift[]
    refetchGifts: () => void
-   removeGifts: () => void
+   removeAllGifts: () => void
    createGift: (gift: Gift) => void
    deleteGift: (giftID: Gift['id']) => void
 }

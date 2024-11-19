@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react';
 import useGiftPreview from '~/hooks/useGiftPreview';
-import useGifts from '~/hooks/useGifts';
 import type { Gift } from '~/types/gifts';
-import convertToDecimalNumber from '~/utils/convertToDecimalNumber';
-import getTotalPrice from '~/utils/getTotalPrice';
 import setDefaultImage from '~/utils/setDefaultImage';
 
-import AppModal from '../AppModal';
-import Button from '../Button';
-import ConfirmationPrompt from '../ConfirmationPrompt';
+import AppModal from './AppModal';
+import Button from './ui/Button';
+import ConfirmationPrompt from './ui/ConfirmationPrompt';
 
-interface GiftPreviewModalProps {
+interface Props {
    gift: Gift 
    closeModal: () => void
 }
 
-export default function GiftPreviewModal({ gift, closeModal }: GiftPreviewModalProps) {
+export default function GiftPreviewModal({ gift, closeModal }: Props) {
    const { onDeleteGift, finalPrice, renderConfirmationPrompt } = useGiftPreview({ gift, closeModal })
 
    return (
@@ -59,9 +55,8 @@ export default function GiftPreviewModal({ gift, closeModal }: GiftPreviewModalP
             ? <ConfirmationPrompt 
                onClick={onDeleteGift} 
                closeModal={renderConfirmationPrompt.fn}
-            >
-               ¿Estás seguro de eliminar el regalo?
-            </ConfirmationPrompt>
+               message="¿Estás seguro de eliminar el regalo?"
+            />
             : null
          }
       </AppModal>

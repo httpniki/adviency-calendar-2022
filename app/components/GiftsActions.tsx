@@ -1,23 +1,25 @@
-import Button from '../Button';
-import RenderModal from '../RenderModal';
-import ConfirmationPromptModal from '../ConfirmationPrompt';
+import Button from './ui/Button';
+import RenderModal from './RenderModal';
+import ConfirmationPromptModal from './ui/ConfirmationPrompt';
 import useGifts from '~/hooks/useGifts';
 import { useState } from 'react';
-import GiftsPreviewModal from '../gifts-preview/GiftsPreviewModal';
+import GiftsPreviewModal from './GiftsPreviewModal';
 
 export default function GiftsActions() {
-   const { removeGifts } = useGifts()
+   const { removeAllGifts } = useGifts()
    const [renderConfirmationAlert, setRenderConfirmationAlert] = useState(false)
    const [renderGiftsPreview, setRenderGiftsPreview] = useState(false)
 
-   const renderConfirmationAlertFn = () => 
+   function renderConfirmationAlertFn() {
       setRenderConfirmationAlert(!renderConfirmationAlert)
+   }
    
-   const renderGiftsPreviewFn = () => 
+   function renderGiftsPreviewFn() {
       setRenderGiftsPreview(!renderGiftsPreview)
+   } 
 
    function onRemoveGifts() {
-      removeGifts()
+      removeAllGifts()
       renderConfirmationAlertFn()
    }
 
@@ -41,9 +43,8 @@ export default function GiftsActions() {
                <ConfirmationPromptModal 
                   closeModal={renderConfirmationAlertFn}
                   onClick={onRemoveGifts}
-               >
-                  ¿Estas seguro de eliminar todos los regalos?
-               </ConfirmationPromptModal>
+                  message='¿Estas seguro de eliminar todos los regalos?'
+               />
             }
 
             {renderGiftsPreview && 

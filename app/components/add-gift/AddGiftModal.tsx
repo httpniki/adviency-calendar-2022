@@ -1,7 +1,9 @@
 import useCreateGift from '~/hooks/useCreateGift';
 import type { Gift } from '~/types/gifts';
-import GiftFormModal from '../GiftFormModal';
-
+import AppModal from '../AppModal';
+import AddGiftTextInput from './AddGiftTextInput';
+import AddGiftNumberInput from './AddGiftNumberInput';
+import Button from '../ui/Button';
 
 interface AddGiftModalProps {
    closeModal: () => void
@@ -17,43 +19,29 @@ export default function AddGiftModal({ closeModal, randomGifts }: AddGiftModalPr
    } = useCreateGift({ closeModal, randomGifts })
 
    return(
-      <>
-         <GiftFormModal
-            closeModal={closeModal}
-            error={error}
-            modalTitle='Agregar un regalo'
-            onClickBtn={{ fn: onCreateGift, btnTitle: 'Agregar' }}
-            onRandomGift={onInsertRandomGift}
-            inputName={{ onChangeFn: onChange }}
-            inputImage={{ onChangeFn: onChange }}
-            inputquantity={{ onChangeFn: onChange }}
-            inputPrice={{ onChangeFn: onChange }}
-            inputRecipient={{ onChangeFn: onChange }}
-         />
-         {/*
-      <AppModal 
+      <AppModal
          type='form'
          closeModal={closeModal}
       >
          <h2 className="mb-3 text-xl font-bold">
             Agregar un regalo
          </h2>
-         
-         <AddGiftTextInput 
+
+         <AddGiftTextInput
             id='input-gift-name'
             name='name'
             placeholder="Inserta un regalo"
             onChange={onChange}
             error={error}
          />
-         <AddGiftTextInput 
+         <AddGiftTextInput
             id='input-gift-image'
             name="image"
             placeholder="Inserta una imagen"
             onChange={onChange}
             error={error}
          />
-         <AddGiftTextInput 
+         <AddGiftTextInput
             name="recipient"
             placeholder="Destinatario"
             onChange={onChange}
@@ -68,28 +56,25 @@ export default function AddGiftModal({ closeModal, randomGifts }: AddGiftModalPr
             error={error}
             max={99999}
          />
- 
+
          <AddGiftNumberInput
             id="add-gift-price"
             name='price'
-            labelText="Precio: $" 
+            labelText="Precio: $"
             onChange={onChange}
             error={error}
          />
-
+         
          <Button onClick={onInsertRandomGift}>
             Regalo aleatorio
          </Button>
-         <Button 
+
+         <Button
             color='green'
             onClick={onCreateGift}
          >
             Agregar
          </Button>
-      </AppModal>
-   )
-   
-   */}
-      </>
+      </AppModal>   
    )
 }

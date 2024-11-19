@@ -1,4 +1,4 @@
-interface ButtonProps {
+interface Props {
    children: React.ReactNode
    className?: string
    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -12,7 +12,7 @@ export default function Button({
    onClick, 
    color = 'red' ,
    id
-}: ButtonProps ) {
+}: Props ) {
    const colorVariants = {
       red: 'bg-red-700',
       green: 'bg-green-600'
@@ -21,8 +21,8 @@ export default function Button({
    return(
       <button 
          className={`h-10 w-full rounded-md text-white ${colorVariants[color]} ${className}`}
-         onClick={onClick}
          id={id}
+         onClick={onClick}
       >
          {children}
       </button>

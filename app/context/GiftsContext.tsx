@@ -8,19 +8,18 @@ const GiftContext = React.createContext<GiftContextValue | null>(null)
 function GiftProvider({ children }: GiftProviderProps) {
    const [gifts, setGifts] = useState<Gift[]>([])
 
-   function refetchGifts() {
-      const gifts = fetchGifts()
-      if(!gifts) return saveGift(null)
-
-      setGifts(gifts)
-   }
-
    useEffect(() => {
       refetchGifts()
    },[])
 
-   function removeGifts() {
-      saveGift(null)
+   function refetchGifts() {
+      const gifts = fetchGifts()
+      setGifts(gifts)
+   }
+
+
+   function removeAllGifts() {
+      saveGift([])
       refetchGifts()
    }
 
@@ -40,7 +39,7 @@ function GiftProvider({ children }: GiftProviderProps) {
          value={{
             gifts,
             refetchGifts,
-            removeGifts,
+            removeAllGifts,
             createGift,
             deleteGift
          }}

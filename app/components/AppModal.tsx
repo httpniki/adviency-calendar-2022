@@ -1,6 +1,6 @@
-import ModalBG from './ModalBG'
+import { useEffect } from 'react'
 
-interface ModalProps {
+interface Props {
    type?: 'form' | 'div'
    className?: string
    children: React.ReactNode
@@ -8,31 +8,47 @@ interface ModalProps {
    id?: string
 }
 
-export default function AppModal({ type='div', className='', children, closeModal, id }: ModalProps) {
-   const $className = 'relative flex min-w-[350px] flex-col items-center gap-2 rounded-lg bg-white px-6 py-5 ' +  className
+export default function AppModal(props: Props) {
+   const className = 'relative flex min-w-[350px] flex-col items-center gap-2 rounded-lg bg-white px-6 py-5 ' +  props.className ?? ''
+
+   useEffect(() => {
+      const $modal = document.getElementById('modal-bg') as HTMLDivElement
+
+      function unrenderModal(event: MouseEvent) {
+         const target = event.target as HTMLDivElement
+         if(target !== $modal) return
+         props.closeModal()
+      }
+   
+      $modal.addEventListener('click', unrenderModal)
+      return () => $modal.removeEventListener('click', unrenderModal)
+   },[props.closeModal])
 
    return(
-      <ModalBG closeModal={closeModal}>
+      <div 
+         className="fixed inset-0 z-10 flex  items-center justify-center bg-black bg-opacity-30"
+         id='modal-bg' 
+      >
          {
-            (type === 'form') &&
+            (props.type === 'form') &&
             <form 
-               className={$className}
+               className={className}
                onSubmit={(event) => event.preventDefault()}
-               id={id}
+               id={props.id}
             >
-               {children}
+               {props.children}
             </form>
          }
 
          {
-            (type === 'div') &&
+            (!props.type || props.type === 'div') &&
             <div 
-               className={$className}
-               id={id}
+               className={className}
+               id={props.id}
             >
-               {children}
+               {props.children}
             </div>
          }
-      </ModalBG>
+      </div>
    )
 }

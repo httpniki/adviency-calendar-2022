@@ -1,13 +1,11 @@
 import {  useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
-import { giftErrorInitialState, giftInitialState } from '~/consts/initialState'
 import type { GiftError, Gift } from '~/types/gifts'
 import getRandomGiftIndex from '~/utils/create-gift/insert-random-gift/getRandomGiftIndex'
 import setGiftInputValue from '~/utils/create-gift/insert-random-gift/setGiftInputValue'
 import { validateGiftFields } from '~/utils/create-gift/validateGiftFields'
 import useGifts from './useGifts'
-
 
 interface UseGiftProps {
    closeModal: () => void
@@ -16,11 +14,23 @@ interface UseGiftProps {
 
 export default function useCreateGift({ closeModal, randomGifts }: UseGiftProps) {
    const { createGift } = useGifts()
-   const [gift, setGift] = useState<Gift>(giftInitialState)
-   const [error, setError] = useState<GiftError>(giftErrorInitialState)
+   const [gift, setGift] = useState<Gift>({
+      quantity: 0,
+      image: '',
+      price: 0,
+      recipient: '',
+      name: '',
+      id: null
+   })
+
+   const [error, setError] = useState<GiftError>({ 
+      field: null, 
+      message: '' 
+   })
+
    const [savedRandomGiftIndex, setSavedRandomGiftIndex] = useState(0)
 
-   const resetErrorState = () => setError(giftErrorInitialState)
+   const resetErrorState = () => setError({ message: '', field: null })
 
    function onChange(event: React.ChangeEvent) {
       const target = event.target as HTMLInputElement

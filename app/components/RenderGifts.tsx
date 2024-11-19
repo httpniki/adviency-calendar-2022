@@ -1,8 +1,13 @@
 import GiftView from '~/components/gift/Gift'
 import useGifts from '~/hooks/useGifts'
-import NoGiftsMessage from './NoGiftsMessage'
 
-
+function NoGiftsMessage() {
+   return(
+      <li className="text-center text-xl font-bold text-gray-400">
+         ¡No hay regalos por aqui!
+      </li>
+   )
+}
 
 export default function RenderGifts() {
    const { gifts } = useGifts()

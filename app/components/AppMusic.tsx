@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
-import VolumenOffSVG from '../assets/VolumenOffSVG'
-import VolumeOnSVG from '../assets/VolumenOnSVG'
-import jazzCoffeeMusic from '../../../public/jazz-coffee-time.mp3'
+import VolumenOffSVG from './assets/VolumenOffSVG'
+import VolumeOnSVG from './assets/VolumenOnSVG'
+import jazzCoffeeMusic from '../../public/jazz-coffee-time.mp3'
 
 export default function AppMusic() {
    const [playMusic, setPlayMusic] = useState(false) 
 
    useEffect(() => {
-      const $audio = document.querySelector('audio')
+      const $audio = document.querySelector('audio') as HTMLAudioElement
 
       if(!playMusic) return
-      if(playMusic) $audio?.play()
+
+      $audio.loop = true
+      $audio.volume = 0.4
+      $audio.play()
    },[playMusic])
 
    return(

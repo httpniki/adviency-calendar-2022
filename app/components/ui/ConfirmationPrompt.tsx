@@ -1,18 +1,18 @@
-import AppModal from './AppModal';
-import Button from './Button';
+import AppModal from '../AppModal';
+import Button from '../ui/Button';
 
-interface ConfirmationPromptProps {
+interface Props {
    onClick: (event: React.MouseEvent) => void
    closeModal: () => void
-   children: React.ReactNode
+   message: string
 }
 
-export default function ConfirmationPrompt({ onClick, closeModal, children }: ConfirmationPromptProps) {
+export default function ConfirmationPrompt({ onClick, closeModal, message }: Props) {
    return(
       <AppModal closeModal={closeModal}>
          <div className="flex w-[350px] flex-col gap-1 rounded-lg bg-white p-6">
             <h2 className="mb-2 text-center text-lg font-bold">
-               {children}
+               {message}
             </h2>
 
             <Button 

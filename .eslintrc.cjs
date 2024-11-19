@@ -7,6 +7,7 @@ module.exports = {
       '@typescript-eslint/no-unused-vars': 'warn',
       'object-curly-spacing': ['warn', 'always'],
       'quotes': ['error', 'single'],
-      'tailwindcss/migration-from-tailwind-2': 'off'
+      'tailwindcss/migration-from-tailwind-2': 'off',
+      "react-hooks/exhaustive-deps": "off"
    }
 };
