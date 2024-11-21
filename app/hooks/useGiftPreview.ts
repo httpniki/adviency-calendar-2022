@@ -4,19 +4,15 @@ import convertToDecimalNumber from '~/utils/convertToDecimalNumber'
 import getTotalPrice from '~/utils/getTotalPrice'
 import useGifts from './useGifts'
 
-interface UseGiftPreviewProps {
+interface Props {
    closeModal: () => void
    gift: Gift
 }
 
-export default function useGiftPreview({ closeModal, gift }: UseGiftPreviewProps) {
-   const [finalPrice, setFinalPrice] = useState<string>('0')
-   const [renderConfirmationPrompt, setRenderConfirmationPrompt] = useState(false)
+export default function useGiftPreview({ closeModal, gift }: Props) {
    const { deleteGift } = useGifts()
-   
-   function renderConfirmationPromptFn() { 
-      setRenderConfirmationPrompt(!renderConfirmationPrompt)
-   }
+   const [finalPrice, setFinalPrice] = useState<string>('0')
+   const [renderConfirmationPopup, setRenderConfirmationPopup] = useState(false)
 
    useEffect(() => {
       if(!gift.price) return
@@ -27,16 +23,14 @@ export default function useGiftPreview({ closeModal, gift }: UseGiftPreviewProps
 
    function onDeleteGift() {
       deleteGift(gift.id)
-      renderConfirmationPromptFn()
+      setRenderConfirmationPopup(false)
       closeModal()
    }
 
    return {
-      onDeleteGift,
+      deleteGift: onDeleteGift,
       finalPrice,
-      renderConfirmationPrompt: {
-         state: renderConfirmationPrompt,
-         fn: renderConfirmationPromptFn
-      }
+      renderConfirmationPopup,
+      setRenderConfirmationPopup
    }
 }

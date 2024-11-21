@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { Gift } from '~/types/gifts'
-import GiftPreviewModal from '../GiftPreviewModal'
-import GiftImage from './GiftImage'
-import GiftPrice from './GiftPrice'
+import defaultImage from 'public/default-image.webp';
+import GiftPrice from './gift/GiftPrice';
+import GiftPreviewModal from './GiftPreviewModal';
 
-interface GiftProps {
+interface Props {
    gift: Gift
    opts?: {
       recipient?: boolean
@@ -12,28 +12,29 @@ interface GiftProps {
    }
 }
 
-export default function Gift({ gift, opts }: GiftProps) {
-   const [renderGiftPreviewModal, setRenderGiftPreviewModal] = useState(false)
-   const [giftToPreview, setGiftToPreview] = useState<Gift | null>(null)
+interface GiftPreviewState {
+   gift: Gift | null
+   render: Boolean
+}
+
+export default function Gift({ gift, opts }: Props) {
+   const [giftPreview, setGiftPreview] = useState<GiftPreviewState>({ render: false, gift: null })
    const { recipient = true, priceType = 'unit' } = opts ?? {}
-
-   function renderGiftPreviewModalFn() {
-      setRenderGiftPreviewModal(!renderGiftPreviewModal)
-   }
-
-   function onPreviewGift(gift: Gift) {
-      setGiftToPreview(gift)
-      renderGiftPreviewModalFn()
-   }
 
    return (
       <>
          <li 
             className='flex h-12 w-full cursor-pointer items-center justify-between gap-1 hover:opacity-80'
-            onClick={(onPreviewGift ? () => onPreviewGift(gift) : undefined)}
+            onClick={() => setGiftPreview({ gift, render: true })}
          >
             <div className='flex gap-3'>
-               <GiftImage url={gift.image} alt={gift.name}/>
+               <figure className='flex h-12 w-12 items-center justify-center'>
+                  <img 
+                     src={gift.image} 
+                     alt={gift.name}
+                     onError={(event) => (event.target as HTMLImageElement).src = defaultImage}
+                  />
+               </figure>
 
                <div className={`flex flex-col ${!recipient ? 'justify-center' : ''}`}>
                   <div className='flex items-center gap-1'>
@@ -56,10 +57,10 @@ export default function Gift({ gift, opts }: GiftProps) {
             />
          </li>   
 
-         {(renderGiftPreviewModal && giftToPreview) &&
+         {(giftPreview.render) &&
                <GiftPreviewModal 
-                  gift={giftToPreview}
-                  closeModal={renderGiftPreviewModalFn}
+                  gift={giftPreview.gift!}
+                  closeModal={() => setGiftPreview({ gift: null, render: false })}
                />
          }
       </>

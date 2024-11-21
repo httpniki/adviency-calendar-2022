@@ -1,7 +1,7 @@
 import type { GiftError } from '~/types/gifts'
-import ErrorMessage from '../ErrorMessage'
+import ErrorMessage from '../ui/ErrorMessage'
 
-interface AddGiftInputProps {
+interface Props {
    id?: string
    name?: 'name' | 'image'  | 'recipient'
    placeholder?: HTMLInputElement['placeholder']
@@ -17,7 +17,7 @@ export default function AddGiftTextInput({
    placeholder = '', 
    onChange,
    error,
-}: AddGiftInputProps) {
+}: Props) {
    return(
       <div className='w-full'>
          <input

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import useGifts from '~/hooks/useGifts';
-import Gift from './gift/Gift'
+import Gift from './Gift'
 import getTotalPrice from '~/utils/getTotalPrice'
-import modifyPrintStyles from '~/utils/gifts-preview/modifyPrintStyles';
 import convertToDecimalNumber from '~/utils/convertToDecimalNumber';
 import Button from './ui/Button';
-import AppModal from './AppModal';
+import AppModal from './ui/AppModal';
 
 interface Props {
    closeModal: () => void
@@ -24,12 +23,20 @@ export default function GiftsPreviewModal({ closeModal }: Props) {
    },[gifts])
 
    useEffect(() => {
-      window.addEventListener('beforeprint', () => modifyPrintStyles('beforeprint'))
-      window.addEventListener('afterprint', () => modifyPrintStyles('afterprint'))
+      function setPrintStyles() {
+
+      }
+
+      function removePrintStyle() {
+
+      }
+
+      window.addEventListener('beforeprint', setPrintStyles)
+      window.addEventListener('afterprint', removePrintStyle)
 
       return () => {
-         window.removeEventListener('beforeprint', () => modifyPrintStyles('beforeprint'))
-         window.removeEventListener('afterprint', () => modifyPrintStyles('afterprint'))
+         window.removeEventListener('beforeprint', setPrintStyles)
+         window.removeEventListener('afterprint', removePrintStyle)
       }
    },[])
 

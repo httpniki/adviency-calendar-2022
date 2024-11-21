@@ -1,11 +1,10 @@
-import {  useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
 import type { GiftError, Gift } from '~/types/gifts'
-import getRandomGiftIndex from '~/utils/create-gift/insert-random-gift/getRandomGiftIndex'
-import setGiftInputValue from '~/utils/create-gift/insert-random-gift/setGiftInputValue'
 import { validateGiftFields } from '~/utils/create-gift/validateGiftFields'
 import useGifts from './useGifts'
+import getRandomNumber from '~/utils/getRandomNumber'
 
 interface UseGiftProps {
    closeModal: () => void
@@ -14,6 +13,7 @@ interface UseGiftProps {
 
 export default function useCreateGift({ closeModal, randomGifts }: UseGiftProps) {
    const { createGift } = useGifts()
+
    const [gift, setGift] = useState<Gift>({
       quantity: 0,
       image: '',
@@ -28,26 +28,29 @@ export default function useCreateGift({ closeModal, randomGifts }: UseGiftProps)
       message: '' 
    })
 
-   const [savedRandomGiftIndex, setSavedRandomGiftIndex] = useState(0)
-
    const resetErrorState = () => setError({ message: '', field: null })
 
    function onChange(event: React.ChangeEvent) {
       const target = event.target as HTMLInputElement
-      const giftPropsName = Object.keys(gift)
+      const isGiftKey = Object.keys(gift).includes(target.name)
 
-      if (!giftPropsName.includes(target.name)) return
+      if (!isGiftKey) return
+
       if (target.name === error.field) resetErrorState()
 
-      if(target.name === 'quantity' || target.name === 'price') return setGift({ 
-         ...gift, 
-         [target.name]: Number(target.value) 
-      })
+      if(target.name === 'quantity' || target.name === 'price') { 
+         setGift({ 
+            ...gift, 
+            [target.name]: Number(target.value) 
+         })
+
+         return
+      }
 
       setGift({ ...gift, [target.name]: target.value })
    }
 
-   function onCreateGift() {
+   function handleCreateGift() {
       const hasError = validateGiftFields(gift)
       if (hasError) return setError(hasError)
       
@@ -57,28 +60,24 @@ export default function useCreateGift({ closeModal, randomGifts }: UseGiftProps)
    }
 
    function onInsertRandomGift() {
-      const index = getRandomGiftIndex({
-         giftsLength: randomGifts.length,
-         lastIndex: savedRandomGiftIndex
-      })
+      const $inputName = document.getElementById('input-gift-name') as HTMLInputElement
+      const $inputImage = document.getElementById('input-gift-image') as HTMLInputElement
 
-      setSavedRandomGiftIndex(index)
-      const selectedGift = randomGifts[index]
+      const index = getRandomNumber(0, randomGifts.length) 
+      const gift = randomGifts[index]
 
-      setGiftInputValue({
-         nameValue: selectedGift.name,
-         imageValue: selectedGift.image
-      })
+      $inputName.value = gift.name
+      $inputImage.value = gift.image
 
       setGift({
          ...gift,
-         name: selectedGift.name,
-         image: selectedGift.image
+         name: gift.name,
+         image: gift.image
       })
    }
 
    return {
-      onCreateGift,
+      handleCreateGift,
       onChange,
       onInsertRandomGift,
       error,

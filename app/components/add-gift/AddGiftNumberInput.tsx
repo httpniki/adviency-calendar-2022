@@ -1,7 +1,7 @@
 import type { GiftError } from '~/types/gifts'
-import ErrorMessage from '../ErrorMessage'
+import ErrorMessage from '../ui/ErrorMessage'
 
-interface AddGiftNumberInputProps {
+interface Props {
    id?: string
    className?: string
    name?: string
@@ -20,7 +20,7 @@ export default function AddGiftNumberInput({
    defaultValue = 0,
    onChange,
    error,
-}: AddGiftNumberInputProps){
+}: Props){
    return(
       <div className='flex flex-col items-center'>
          <div>

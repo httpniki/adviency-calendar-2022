@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import type { GiftProviderProps , Gift, GiftContextValue } from '~/types/gifts'
-import fetchGifts from '~/utils/fetchGifts'
-import saveGift from '~/utils/saveGift'
+import getGifs from '~/utils/gift/getGifts'
+import setGift from '~/utils/gift/saveGift'
 
-const GiftContext = React.createContext<GiftContextValue | null>(null)
+export const GiftContext = React.createContext<GiftContextValue | null>(null)
 
-function GiftProvider({ children }: GiftProviderProps) {
+export function GiftProvider({ children }: GiftProviderProps) {
    const [gifts, setGifts] = useState<Gift[]>([])
 
-   useEffect(() => {
-      refetchGifts()
-   },[])
+   useEffect(refetchGifts,[])
 
    function refetchGifts() {
-      const gifts = fetchGifts()
-      setGifts(gifts)
+      setGifts(getGifs())
    }
 
-
    function removeAllGifts() {
-      saveGift([])
+      setGift([])
       refetchGifts()
    }
 
    function createGift(gift: Gift) {
-      saveGift(gift)
+      setGift(gift)
       refetchGifts()
    }
 
    function deleteGift(giftID: Gift['id']) {
       const updatedGifts = gifts.filter(el => el.id !== giftID)
-      saveGift(updatedGifts)
+      setGift(updatedGifts)
       refetchGifts()
    }
 
@@ -49,4 +45,3 @@ function GiftProvider({ children }: GiftProviderProps) {
    )
 }
 
-export { GiftContext, GiftProvider }

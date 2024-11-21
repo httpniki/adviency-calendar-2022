@@ -1,4 +1,4 @@
-import GiftView from '~/components/gift/Gift'
+import GiftView from '~/components/Gift'
 import useGifts from '~/hooks/useGifts'
 
 function NoGiftsMessage() {
@@ -9,11 +9,11 @@ function NoGiftsMessage() {
    )
 }
 
-export default function RenderGifts() {
+export default function GiftList() {
    const { gifts } = useGifts()
 
    return(
-      <>
+      <ul className="flex flex-col gap-4 py-5">
          {(!gifts.length) 
             ?<NoGiftsMessage/>
             : (gifts.length) && 
@@ -25,6 +25,6 @@ export default function RenderGifts() {
                   />         
                })
          }
-      </>
+      </ul>
    )
 }

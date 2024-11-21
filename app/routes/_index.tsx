@@ -3,14 +3,16 @@ import { useState } from 'react';
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 
-import RenderGifts from '~/components/RenderGifts';
-import GiftsActions from '~/components/GiftsActions';
+import ConfirmationPromptModal from '../components/ui/ConfirmationPrompt';
 import Button from '~/components/ui/Button';
 import RenderModal from '~/components/RenderModal';
-import AddGiftModal from '~/components/add-gift/AddGiftModal';
-import getRandomGifts from '~/utils/getRandomGifts';
+import AddGiftModal from '~/components/AddGiftModal';
+import getRandomGifts from '~/utils/gift/getRandomGifts';
 import type { Gift } from '~/types/gifts';
 import AppMusic from '~/components/AppMusic';
+import GiftList from '~/components/GiftList';
+import useGifts from '~/hooks/useGifts';
+import GiftsPreviewModal from '~/components/GiftsPreviewModal';
 
 export async function loader() {
    const randomGifts: Gift[] = await getRandomGifts()
@@ -20,18 +22,28 @@ export async function loader() {
 export const meta: MetaFunction = () => {
    return [
       { title: 'Adviency Calendar 2022' },
-      { name: '', content: '' }
    ];
 };
 
+interface RenderModalState {
+   addGiftModal: boolean
+   giftsPreview: boolean
+   deleteAllGiftsPopup: boolean
+}
+
 export default function Index() {
    const randomGifts = useLoaderData<typeof loader>()
-   
-   const [renderAddGiftModal, setRenderAddGiftModal] = useState(false)
+   const { removeAllGifts } = useGifts()
+   const [renderModal, setRenderModal] = useState<RenderModalState>({ 
+      addGiftModal: false, 
+      giftsPreview: false, 
+      deleteAllGiftsPopup: false 
+   })
 
-   function renderAddGiftModalFn() {
-      setRenderAddGiftModal(!renderAddGiftModal)
-   } 
+   function onRemoveGifts() {
+      removeAllGifts()
+      setRenderModal({ ...renderModal, deleteAllGiftsPopup: false })
+   }
 
    return (
       <>
@@ -43,26 +55,48 @@ export default function Index() {
 
                <Button
                   className="rounded-xl"
-                  onClick={renderAddGiftModalFn}
+                  onClick={() => setRenderModal({ ...renderModal, addGiftModal: true })}
                >
                   Agregar regalo
                </Button>
 
-               <ul className="flex flex-col gap-4 py-5">
-                  <RenderGifts />
-               </ul>
+               <GiftList />
 
-               <GiftsActions />
+               <Button 
+                  color='green'
+                  onClick={() => setRenderModal({ ...renderModal, giftsPreview: true })}
+               >
+                  Previsualizar
+               </Button>
+
+               <Button onClick={() => setRenderModal({ ...renderModal, deleteAllGiftsPopup: true })}>
+                  Borrar todo
+               </Button>
+
             </div>
          </main>
 
          <AppMusic/>
 
          <RenderModal>
-            {(renderAddGiftModal) && 
-               <AddGiftModal 
-                  closeModal={renderAddGiftModalFn}
+            {(renderModal.addGiftModal) && 
+               <AddGiftModal
+                  closeModal={() =>  setRenderModal({ ...renderModal, addGiftModal: false })}
                   randomGifts={randomGifts}
+               />
+            }
+
+            {(renderModal.deleteAllGiftsPopup) &&
+               <ConfirmationPromptModal 
+                  message='¿Estas seguro de eliminar todos los regalos?'
+                  onClick={onRemoveGifts}
+                  closeModal={() => setRenderModal({ ...renderModal, deleteAllGiftsPopup: false })}
+               />
+            }
+
+            {(renderModal.giftsPreview) && 
+               <GiftsPreviewModal
+                  closeModal={() => setRenderModal({ ...renderModal, giftsPreview: false })}
                />
             }
          </RenderModal>

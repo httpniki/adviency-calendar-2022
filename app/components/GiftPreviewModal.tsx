@@ -1,8 +1,8 @@
 import useGiftPreview from '~/hooks/useGiftPreview';
 import type { Gift } from '~/types/gifts';
-import setDefaultImage from '~/utils/setDefaultImage';
+import defaultImage from 'public/default-image.webp';
 
-import AppModal from './AppModal';
+import AppModal from './ui/AppModal';
 import Button from './ui/Button';
 import ConfirmationPrompt from './ui/ConfirmationPrompt';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function GiftPreviewModal({ gift, closeModal }: Props) {
-   const { onDeleteGift, finalPrice, renderConfirmationPrompt } = useGiftPreview({ gift, closeModal })
+   const { finalPrice, deleteGift, renderConfirmationPopup, setRenderConfirmationPopup } = useGiftPreview({ gift, closeModal })
 
    return (
       <AppModal 
@@ -21,7 +21,7 @@ export default function GiftPreviewModal({ gift, closeModal }: Props) {
       >
          <picture className='flex min-h-[250px] items-center'>
             <img 
-               onError={setDefaultImage}
+               onError={(event) => (event.target as HTMLImageElement).src = defaultImage}
                src={gift.image} 
                alt={gift.name}
             />
@@ -47,17 +47,16 @@ export default function GiftPreviewModal({ gift, closeModal }: Props) {
             </div>
          </div>
 
-         <Button onClick={renderConfirmationPrompt.fn}>
+         <Button onClick={() => setRenderConfirmationPopup(true)}>
             Borrar Regalo
          </Button>
          
-         {(renderConfirmationPrompt.state) 
-            ? <ConfirmationPrompt 
-               onClick={onDeleteGift} 
-               closeModal={renderConfirmationPrompt.fn}
+         {(renderConfirmationPopup) && 
+            <ConfirmationPrompt 
+               onClick={deleteGift} 
+               closeModal={() => setRenderConfirmationPopup(false)}
                message="¿Estás seguro de eliminar el regalo?"
             />
-            : null
          }
       </AppModal>
    )

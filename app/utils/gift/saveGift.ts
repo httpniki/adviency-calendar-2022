@@ -1,8 +1,8 @@
 import type { Gift } from '~/types/gifts';
-import fetchGifts from './fetchGifts';
+import getGifts from './getGifts';
 
 export default function saveGift(gift: Gift | Gift[]) {
-   const savedGifts = fetchGifts()  
+   const savedGifts = getGifts()  
    let gifts: Gift[] = []
    
    if(Array.isArray(gift)) gifts = gift

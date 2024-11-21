@@ -1,6 +1,6 @@
 import type { Gift } from '~/types/gifts'
 
-export default function fetchGifts(): Gift[] {
+export default function getGifs(): Gift[] {
    const gifts = window.localStorage.getItem('gifts')
 
    if(!gifts) return []

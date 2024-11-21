@@ -1,4 +1,4 @@
-import AppModal from '../AppModal';
+import AppModal from '../ui/AppModal';
 import Button from '../ui/Button';
 
 interface Props {

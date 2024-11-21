@@ -1,20 +1,20 @@
 import useCreateGift from '~/hooks/useCreateGift';
 import type { Gift } from '~/types/gifts';
-import AppModal from '../AppModal';
-import AddGiftTextInput from './AddGiftTextInput';
-import AddGiftNumberInput from './AddGiftNumberInput';
-import Button from '../ui/Button';
+import AppModal from './ui/AppModal';
+import AddGiftTextInput from './add-gift/AddGiftTextInput';
+import AddGiftNumberInput from './add-gift/AddGiftNumberInput';
+import Button from './ui/Button';
 
-interface AddGiftModalProps {
+interface Props {
    closeModal: () => void
    randomGifts: Gift[]
 }
 
-export default function AddGiftModal({ closeModal, randomGifts }: AddGiftModalProps) {
+export default function AddGiftModal({ closeModal, randomGifts }: Props) {
    const { 
       error, 
       onChange, 
-      onCreateGift, 
+      handleCreateGift, 
       onInsertRandomGift 
    } = useCreateGift({ closeModal, randomGifts })
 
@@ -71,7 +71,7 @@ export default function AddGiftModal({ closeModal, randomGifts }: AddGiftModalPr
 
          <Button
             color='green'
-            onClick={onCreateGift}
+            onClick={handleCreateGift}
          >
             Agregar
          </Button>
