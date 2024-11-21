@@ -19,7 +19,7 @@ export default function AppMusic() {
    return(
       <>
          <button 
-            className='absolute right-5 top-5 z-10 h-max w-max'
+            className='absolute right-6 top-6 z-10 h-max w-max'
             onClick={() => setPlayMusic(!playMusic)}
          >
             {(playMusic)      

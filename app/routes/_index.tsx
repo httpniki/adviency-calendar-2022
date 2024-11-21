@@ -44,8 +44,8 @@ export default function Index() {
    }
 
    return (
-      <main className="flex min-h-screen items-center justify-center bg-cover p-2 sm:h-screen">
-         <article className='flex h-full w-full max-w-[1360px] flex-col-reverse gap-2 sm:flex-row'>
+      <main className="flex min-h-screen items-center justify-center bg-cover p-2 sm:h-screen sm:p-4">
+         <article className='flex h-full w-full max-w-[1360px] flex-col-reverse gap-4 sm:flex-row'>
             <section className="flex h-full flex-1 flex-col gap-2 rounded-lg bg-white p-5">
                <h1 className="my-2 text-center font-christmas text-4xl sm:my-5 sm:text-6xl">
                   Regalos:
