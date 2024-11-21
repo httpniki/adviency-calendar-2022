@@ -4,6 +4,7 @@ interface Props {
    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
    color?: 'red' | 'green'
    id?: string
+   disabled?: boolean
 }
 
 export default function Button({ 
@@ -11,18 +12,22 @@ export default function Button({
    className='', 
    onClick, 
    color = 'red' ,
-   id
+   id,
+   disabled = false
 }: Props ) {
-   const colorVariants = {
-      red: 'bg-red-700',
-      green: 'bg-green-600'
-   }
-
    return(
       <button 
-         className={`h-10 w-full rounded-md text-white ${colorVariants[color]} ${className}`}
+         className={
+            'h-10 w-full rounded-md text-white' + 
+            `${className ? ' ' + className : ''}` + 
+            `${disabled ? ' opacity-60' : ' hover:opacity-90'}`
+         }
+         style={{ 
+            backgroundColor: color === 'red' ? '#b91c1c' : '#16a34a'
+         }}
          id={id}
          onClick={onClick}
+         disabled={disabled}
       >
          {children}
       </button>

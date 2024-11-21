@@ -16,19 +16,26 @@ export default function GiftsPreviewModal({ closeModal }: Props) {
    const [totalPrice, setTotalPrice] = useState<string>('0')
 
    useEffect(() => {
-      if(!gifts || !gifts.length) return
-
+      if(!gifts.length) return
       const finalPrice = getTotalPrice(gifts)
       setTotalPrice(convertToDecimalNumber(finalPrice))
    },[gifts])
 
    useEffect(() => {
-      function setPrintStyles() {
+      const $bgModal = document.querySelector('#modal-bg') as HTMLElement
+      const $modalPrintBtn = document.querySelector('#modal-print-btn') as HTMLButtonElement
+      const $closeModalBtn = document.querySelector('#close-modal-btn') as HTMLButtonElement
 
+      function setPrintStyles() {
+         $bgModal.classList.add('bg-image')
+         $modalPrintBtn.style.display = 'none'
+         $closeModalBtn.style.display = 'none'
       }
 
       function removePrintStyle() {
-
+         $bgModal.classList.remove('bg-image')
+         $modalPrintBtn.style.display = 'block'
+         $closeModalBtn.style.display = 'block'
       }
 
       window.addEventListener('beforeprint', setPrintStyles)
@@ -46,9 +53,8 @@ export default function GiftsPreviewModal({ closeModal }: Props) {
             Regalos
          </h2>
             
-         <ul className='flex w-full flex-col gap-3'>
-            {
-               (gifts.length > 0) && 
+         <ul className='flex w-full flex-col gap-4 overflow-auto'>
+            {(gifts.length > 0) && 
                gifts.map((el, index) => {
                   return <Gift 
                      key={index}
@@ -62,7 +68,7 @@ export default function GiftsPreviewModal({ closeModal }: Props) {
             }
          </ul>
 
-         <p>Total: ${totalPrice}</p>
+         <p className='py-2'>Total: ${totalPrice}</p>
 
          <div className='flex w-full gap-1'>
             <Button

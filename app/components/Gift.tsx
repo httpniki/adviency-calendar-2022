@@ -24,7 +24,7 @@ export default function Gift({ gift, opts }: Props) {
    return (
       <>
          <li 
-            className='flex h-12 w-full cursor-pointer items-center justify-between gap-1 hover:opacity-80'
+            className='flex h-12 w-full cursor-pointer items-center justify-between gap-5 hover:opacity-80'
             onClick={() => setGiftPreview({ gift, render: true })}
          >
             <div className='flex gap-3'>
@@ -42,10 +42,9 @@ export default function Gift({ gift, opts }: Props) {
                      <p>({gift.quantity})</p>
                   </div>
 
-                  {
-                     (recipient) 
-                        ? <p className="text-sm text-gray-700">{gift.recipient}</p> 
-                        : null
+                  {(recipient) 
+                     ? <p className="text-sm text-gray-700">{gift.recipient}</p> 
+                     : null
                   } 
                </div>
             </div>
@@ -58,10 +57,10 @@ export default function Gift({ gift, opts }: Props) {
          </li>   
 
          {(giftPreview.render) &&
-               <GiftPreviewModal 
-                  gift={giftPreview.gift!}
-                  closeModal={() => setGiftPreview({ gift: null, render: false })}
-               />
+            <GiftPreviewModal 
+               gift={giftPreview.gift!}
+               closeModal={() => setGiftPreview({ gift: null, render: false })}
+            />
          }
       </>
    )

@@ -13,7 +13,7 @@ export default function GiftList() {
    const { gifts } = useGifts()
 
    return(
-      <ul className="flex flex-col gap-4 py-5">
+      <ul className="flex flex-1 flex-col gap-4 overflow-auto py-5">
          {(!gifts.length) 
             ?<NoGiftsMessage/>
             : (gifts.length) && 

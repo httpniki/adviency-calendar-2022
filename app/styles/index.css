@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
+.bg-image, main {
 	background-image: url(../../public/background.png);
+   background-size: cover;
 }

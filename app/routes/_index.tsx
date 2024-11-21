@@ -6,7 +6,7 @@ import { json } from '@remix-run/node';
 import ConfirmationPromptModal from '../components/ui/ConfirmationPrompt';
 import Button from '~/components/ui/Button';
 import RenderModal from '~/components/RenderModal';
-import AddGiftModal from '~/components/AddGiftModal';
+import AddGiftForm from '~/components/AddGiftForm';
 import getRandomGifts from '~/utils/gift/getRandomGifts';
 import type { Gift } from '~/types/gifts';
 import AppMusic from '~/components/AppMusic';
@@ -26,80 +26,77 @@ export const meta: MetaFunction = () => {
 };
 
 interface RenderModalState {
-   addGiftModal: boolean
    giftsPreview: boolean
-   deleteAllGiftsPopup: boolean
+   deleteAllGiftsPrompt: boolean
 }
 
 export default function Index() {
    const randomGifts = useLoaderData<typeof loader>()
-   const { removeAllGifts } = useGifts()
+   const { removeAllGifts, gifts } = useGifts()
    const [renderModal, setRenderModal] = useState<RenderModalState>({ 
-      addGiftModal: false, 
       giftsPreview: false, 
-      deleteAllGiftsPopup: false 
+      deleteAllGiftsPrompt: false 
    })
 
    function onRemoveGifts() {
       removeAllGifts()
-      setRenderModal({ ...renderModal, deleteAllGiftsPopup: false })
+      setRenderModal({ ...renderModal, deleteAllGiftsPrompt: false })
    }
 
    return (
-      <>
-         <main className="flex min-h-screen items-center justify-center bg-cover">
-            <div className="flex w-[400px] flex-col gap-1 rounded-lg bg-white p-5">
-               <h1 className="my-5 text-center font-christmas text-6xl">
+      <main className="flex min-h-screen items-center justify-center bg-cover p-2 sm:h-screen">
+         <article className='flex h-full w-full max-w-[1360px] flex-col-reverse gap-2 sm:flex-row'>
+            <section className="flex h-full flex-1 flex-col gap-2 rounded-lg bg-white p-5">
+               <h1 className="my-2 text-center font-christmas text-4xl sm:my-5 sm:text-6xl">
                   Regalos:
                </h1>
-
-               <Button
-                  className="rounded-xl"
-                  onClick={() => setRenderModal({ ...renderModal, addGiftModal: true })}
-               >
-                  Agregar regalo
-               </Button>
 
                <GiftList />
 
                <Button 
                   color='green'
                   onClick={() => setRenderModal({ ...renderModal, giftsPreview: true })}
+                  disabled={gifts.length === 0}
                >
                   Previsualizar
                </Button>
 
-               <Button onClick={() => setRenderModal({ ...renderModal, deleteAllGiftsPopup: true })}>
+               <Button 
+                  onClick={() => setRenderModal({ ...renderModal, deleteAllGiftsPrompt: true })}
+                  disabled={gifts.length === 0}
+               >
                   Borrar todo
                </Button>
 
-            </div>
-         </main>
+               <AppMusic/>
+            </section>
 
-         <AppMusic/>
+            <section className='h-full w-full rounded-lg bg-white px-6 py-5 md:max-w-[380px]'>
+               <h2 className="mb-3 text-center text-xl font-bold">
+                  Agregar un regalo
+               </h2>
 
-         <RenderModal>
-            {(renderModal.addGiftModal) && 
-               <AddGiftModal
-                  closeModal={() =>  setRenderModal({ ...renderModal, addGiftModal: false })}
-                  randomGifts={randomGifts}
-               />
-            }
+               <AddGiftForm randomGifts={randomGifts}/>
+            </section>
 
-            {(renderModal.deleteAllGiftsPopup) &&
-               <ConfirmationPromptModal 
-                  message='¿Estas seguro de eliminar todos los regalos?'
-                  onClick={onRemoveGifts}
-                  closeModal={() => setRenderModal({ ...renderModal, deleteAllGiftsPopup: false })}
-               />
-            }
+            <RenderModal>
+               {(renderModal.deleteAllGiftsPrompt) &&
+                  <ConfirmationPromptModal 
+                     message='¿Estas seguro de eliminar todos los regalos?'
+                     onClick={onRemoveGifts}
+                     closeModal={() => setRenderModal({ ...renderModal, deleteAllGiftsPrompt: false })}
+                  />
+               }
 
-            {(renderModal.giftsPreview) && 
-               <GiftsPreviewModal
-                  closeModal={() => setRenderModal({ ...renderModal, giftsPreview: false })}
-               />
-            }
-         </RenderModal>
-      </>
+               {(renderModal.giftsPreview) && 
+                  <GiftsPreviewModal
+                     closeModal={() => setRenderModal({ ...renderModal, giftsPreview: false })}
+                  />
+               }
+            </RenderModal>         
+         </article>
+      </main>
    );
 }
+
+

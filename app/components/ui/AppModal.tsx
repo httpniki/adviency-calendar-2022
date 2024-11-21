@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function AppModal(props: Props) {
-   const className = 'relative flex min-w-[350px] flex-col items-center gap-2 rounded-lg bg-white px-6 py-5 ' +  props.className ?? ''
+   const className = 'relative flex max-w-[420px] w-full flex-col items-center gap-2 rounded-lg bg-white px-6 py-5' + 
+   `${props.className ? ' ' + props.className : ''}`
 
    useEffect(() => {
       const $modal = document.getElementById('modal-bg') as HTMLDivElement
@@ -26,7 +27,7 @@ export default function AppModal(props: Props) {
 
    return(
       <div 
-         className="fixed inset-0 z-10 flex  items-center justify-center bg-black bg-opacity-30"
+         className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-30"
          id='modal-bg' 
       >
          {

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import convertToDecimalNumber from '~/utils/convertToDecimalNumber'
 import getTotalPrice from '~/utils/getTotalPrice'
 
-interface GiftPriceProps {
+interface Props {
    quantity: number
    price: number
    priceType: 'unit' | 'total' 
 }
 
-export default function GiftPrice({ price, quantity, priceType }: GiftPriceProps) {
+export default function GiftPrice({ price, quantity, priceType }: Props) {
    const [giftPrice, setGiftPrice] = useState<string>(convertToDecimalNumber(price))
 
    useEffect(() => {

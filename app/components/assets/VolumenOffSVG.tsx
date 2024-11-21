@@ -1,6 +1,12 @@
-export default function VolumenOffSVG() {
+interface Props {
+   strokeColor?: string
+   className?: string
+   id?: string
+}
+
+export default function VolumenOffSVG({ strokeColor='#000000', className }: Props) {
    return(
-      <svg width="32" height="32" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <svg className={className} width="32" height="32" viewBox="0 0 24 24" strokeWidth="1.5" stroke={strokeColor} fill="none" strokeLinecap="round" strokeLinejoin="round">
          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
          <path d="M15 8a5 5 0 0 1 1.912 4.934m-1.377 2.602a5 5 0 0 1 -.535 .464" />
          <path d="M17.7 5a9 9 0 0 1 2.362 11.086m-1.676 2.299a9 9 0 0 1 -.686 .615" />

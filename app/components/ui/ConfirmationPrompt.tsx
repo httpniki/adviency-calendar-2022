@@ -10,7 +10,7 @@ interface Props {
 export default function ConfirmationPrompt({ onClick, closeModal, message }: Props) {
    return(
       <AppModal closeModal={closeModal}>
-         <div className="flex w-[350px] flex-col gap-1 rounded-lg bg-white p-6">
+         <div className="flex flex-col gap-1 rounded-lg bg-white p-4">
             <h2 className="mb-2 text-center text-lg font-bold">
                {message}
             </h2>

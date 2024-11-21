@@ -19,12 +19,12 @@ export default function AppMusic() {
    return(
       <>
          <button 
-            className='fixed right-5 top-3 z-[1000] h-max w-max'
+            className='absolute right-5 top-5 z-10 h-max w-max'
             onClick={() => setPlayMusic(!playMusic)}
          >
             {(playMusic)      
-               ? <VolumeOnSVG/>
-               : <VolumenOffSVG/>
+               ? <VolumeOnSVG className='stroke-black min-[1480px]:stroke-white'/>
+               : <VolumenOffSVG className='stroke-black min-[1480px]:stroke-white'/>
             }
          </button>
 
