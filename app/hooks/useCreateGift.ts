@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
-import type { GiftError, Gift } from '~/types/gifts'
-import { validateGiftFields } from '~/utils/create-gift/validateGiftFields'
+import type { Gift } from '~/types/gifts'
 import useGifts from './useGifts'
 import getRandomNumber from '~/utils/getRandomNumber'
 
@@ -10,7 +9,7 @@ interface Props {
    randomGifts: Gift[]
 }
 
-export default function useCreateGift({  randomGifts }: Props) {
+export default function useCreateGift({ randomGifts }: Props) {
    const { createGift } = useGifts()
    const [gift, setGift] = useState<Gift>({
       quantity: 0,
@@ -20,18 +19,12 @@ export default function useCreateGift({  randomGifts }: Props) {
       name: '',
       id: null
    })
-   const [error, setError] = useState<GiftError>({ 
-      field: null, 
-      message: '' 
-   })
 
    function onChange(event: React.ChangeEvent) {
       const target = event.target as HTMLInputElement
       const isGiftKey = Object.keys(gift).includes(target.name)
 
       if (!isGiftKey) return
-
-      if (target.name === error.field) setError({ field: null, message: '' })
 
       if(target.name === 'quantity' || target.name === 'price') { 
          setGift({ 
@@ -46,11 +39,6 @@ export default function useCreateGift({  randomGifts }: Props) {
    }
 
    function submit() {
-      const hasError = validateGiftFields(gift)
-      if (hasError) return setError(hasError)
-      
-      setError({ field: null, message: '' })
-
       createGift({ ...gift, id: uuid() })
 
       setGift({
@@ -79,6 +67,5 @@ export default function useCreateGift({  randomGifts }: Props) {
       submit,
       onChange,
       getRandomGift,
-      error,
    }
 }

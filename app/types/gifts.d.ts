@@ -7,11 +7,6 @@ export interface Gift {
    id: string | null
 }
 
-export interface GiftError {
-   field: 'name' | 'recipient' | 'image' | 'quantity' | 'price' | null
-   message: string
-}
-
 export interface GiftContextValue {
    gifts: Gift[]
    refetchGifts: () => void
